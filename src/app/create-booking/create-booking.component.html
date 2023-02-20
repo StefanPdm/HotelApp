@@ -1,42 +1,27 @@
-<!-- <form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form> -->
-
 <div class="card">
   <div class="card-header">
     <h5>Create new booking</h5>
   </div>
-  <div class="card-body">
-    <form>
+  <form [formGroup]="bookingForm" (ngSubmit)="save()">
+    <div class="card-body">
+
       <div class="row mb-2">
         <div class="col">
           <label class="form-label">ID</label>
-          <input type="number" [(ngModel)]="booking.id" name="id" class="form-control" />
+          <input type="number" formControlName="id" class="form-control" />
         </div>
         <div class="col">
           <label class="form-label">Room Number</label>
-          <input type="number" [(ngModel)]="booking.roomNumber" name="room-number"
-            class="form-control" />
+          <input type="number" formControlName="roomNumber" class="form-control" />
         </div>
       </div>
 
       <div class="row mb-2">
         <div class="col-4">
           <label class="form-label">Name</label>
-          <input type="text" [(ngModel)]="booking.name" name="name" class="form-control" />
+          <input type="text" formControlName="name" class="form-control" />
+          <label *ngIf="bookingForm.get('name')?.hasError('minlength')" class="text-warning">Der
+            Name ist zu kurz.</label>
         </div>
       </div>
 
@@ -44,18 +29,20 @@
         <div class="col">
           <label class="form-label">Arrival date</label>
           <!-- unten: runden Klammern = EVENT -->
-          <input type="date" [value]="booking.startDate | date:'yyyy-MM-dd'"
-            (input)="dateChanged($event, true)" class="form-control" />
+          <input formControlName="startDate" type="date"
+            [value]="booking.startDate | date:'yyyy-MM-dd'" (input)="dateChanged($event, true)"
+            class="form-control" />
         </div>
         <div class="col">
           <label class="form-label">Departure date</label>
-          <input type="date" [value]="booking.endDate | date:'yyyy-MM-dd'"
+          <input formControlName="endDate" type="date" [value]="booking.endDate | date:'yyyy-MM-dd'"
             (input)="dateChanged($event, false)" class="form-control" />
         </div>
       </div>
-    </form>
-  </div>
-  <div class="card-footer">
-    <button (click)="save()" class="btn btn-primary">Submit</button>
-  </div>
+
+    </div>
+    <div class="card-footer">
+      <button [disabled]="bookingForm.invalid" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
 </div>

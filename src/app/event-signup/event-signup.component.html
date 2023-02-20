@@ -1,0 +1,41 @@
+<!-- der Name hinter #ist frei wählbar -->
+<form #formSignUp="ngForm">
+  <div class="card p-2">
+    <div class="class-header">
+      <h5>Event Benachrichtigungen</h5>
+    </div>
+    <div class="class-body">
+      <div class="row mb-2">
+        <div class="col-10">
+          <!-- [()] steht für change-Event listener-->
+          <!-- [] seht für 2-way-binding und () für event-listener -->
+          <!-- email property bedeutet @ Zeichen und 1 folgendes sind notwendig -->
+          <input #inputEmail="ngModel" minlength="6" email name="signUpMail"
+            [(ngModel)]="signUpMail" required class="form-control" type="text"
+            placeholder="Deine mail...">
+        </div>
+      </div>
+      <div *ngIf="inputEmail.invalid && (inputEmail.touched || inputEmail.dirty)" class="row">
+        <div class="col-10">
+
+          <!-- ? ist wichtig, da error-Object nur bei Fehler erstellt wird -->
+          <div *ngIf="inputEmail.errors?.['required']" class="alert alert-danger">
+            Email ist erforderlich!
+          </div>
+          <div *ngIf="inputEmail.errors?.['minlength']" class="alert alert-danger">
+            Mindestens 6 Zeichen.
+          </div>
+          <div *ngIf="inputEmail.errors?.['email'] && !inputEmail.hasError('minlength')"
+            class="alert alert-danger">
+            Gib gültige Email ein.
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="class-footer pt-4">
+      <button [disabled]="formSignUp.invalid" (click)="onSubmit()"
+        class="btn btn-primary">Absenden</button>
+    </div>
+  </div>
+</form>

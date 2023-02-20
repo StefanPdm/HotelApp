@@ -4,6 +4,7 @@
       <a routerLink="/edit/{{booking.id}}"
         class="mb-1 h5 text-decoration-none text-primary-emphasis">{{booking.name}}
       </a>
+      <small>ID: {{booking.id}}</small>
       <button (click)="deleteBooking(booking)"
         class="btn btn-light btn-sm position-absolute  bottom-0 end-0 border border-1">x</button>
     </div>
